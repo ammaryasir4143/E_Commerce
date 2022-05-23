@@ -1,5 +1,6 @@
 <?php
 use App\Http\livewire\HomeComponent;
+use App\Http\livewire\ShopComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,5 @@ use Illuminate\Support\Facades\Route;
   //  return view('welcome');
 //});
 Route::get('/',HomeComponent::class);
+
+Route::get('/shop',ShopComponent::class);

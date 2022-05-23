@@ -1,0 +1,3 @@
+<div>
+    Shop Page
+</div>
