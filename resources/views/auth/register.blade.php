@@ -8,8 +8,7 @@
 					<li class="item-link"><a href="/" class="link">home</a></li>
 					<li class="item-link"><span>Register</span></li>
 				</ul>
-			</div>
-            <!-- empty -->
+			</div>            
 			<div class="row">
 				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12 col-md-offset-3">							
 					<div class=" main-content-area">
