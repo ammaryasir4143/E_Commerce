@@ -7159,10 +7159,6 @@ background-color: #888888;
 	padding-left: 40px;
 }
 
-<<<<<<< Updated upstream
-.text-red-600 {
-    color: red;
-=======
 .text-red-600{
     color: red;
 }
@@ -7205,5 +7201,4 @@ svg {
 }
 .wrap-pagination-info .rouded-r-md {
     margin-left: 5px;
->>>>>>> Stashed changes
 }
