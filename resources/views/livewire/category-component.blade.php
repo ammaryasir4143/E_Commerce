@@ -2,8 +2,9 @@
     <div class="container">
         <div class="wrap-breadcrumb">
             <ul>
-                <li class="item-link"><a href="#" class="link">home</a></li>
-                <li class="item-link"><span>Digital & Electronics</span></li>
+                <li class="item-link"><a href="/" class="link">home</a></li>
+                <li class="item-link"><span>Product Categories</span></li>
+                <li class="item-link"><span>{{$category_name}}</span></li>
             </ul>
         </div>
         <div class="row">
@@ -14,7 +15,7 @@
                     </a>
                 </div>
                 <div class="wrap-shop-control">
-                    <h1 class="shop-title">Digital & Electronics</h1>
+                    <h1 class="shop-title">{{$category_name}}</h1>
                     <div class="wrap-right">
                         <div class="sort-item orderby ">
                             <select name="orderby" class="use-chosen" wire:model="sorting" >
