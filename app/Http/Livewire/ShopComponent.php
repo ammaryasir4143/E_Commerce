@@ -11,7 +11,8 @@ use App\Models\Category;
 class ShopComponent extends Component
 {
     public $sorting;
-    public$pagesize;
+    public $pagesize;
+     
     public function mount()
     {
         $this->sorting = "default";
@@ -28,19 +29,19 @@ class ShopComponent extends Component
     {
         if($this->sorting=='date')
         {
-            $products = product::orderBy('created_at','DESC')->paginate($this->pagesize);
+            $products = Product::orderBy('created_at','DESC')->paginate($this->pagesize);
         }
         else if($this->sorting=="price")
         {
-            $products = product::orderBy('regular_price','ASC')->paginate($this->pagesize);
+            $products = Product::orderBy('regular_price','ASC')->paginate($this->pagesize);
         }
         else if($this->sorting=="price=desc")
         {
-            $products = product::orderBy('regular_price','DESC')->paginate($this->pagesize);
+            $products = Product::orderBy('regular_price','DESC')->paginate($this->pagesize);
         }
         else
         {
-            $products = product::paginate($this->pagesize);
+            $products = Product::paginate($this->pagesize);
         }
 
         $categories = Category::all();
