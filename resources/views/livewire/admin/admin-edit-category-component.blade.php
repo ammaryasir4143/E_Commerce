@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                    <button type="update" class="btn btn-primary">Submit</button>
+                                    <button type="update" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
                         </form>

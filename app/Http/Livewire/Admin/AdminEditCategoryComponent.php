@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 class AdminEditCategoryComponent extends Component
 {
     public $category_slug;
-    public$category_id;
-    public$name;
-    public$slug;
+    public $category_id;
+    public $name;
+    public $slug;
 
     public function mount($category_slug)
     {
@@ -24,7 +24,7 @@ class AdminEditCategoryComponent extends Component
     }
     public function generateslug()
     {
-        $this->slug = str::slug($this->name);
+        $this->slug = Str::slug($this->name);
     }
     public function updateCategory()
     {
