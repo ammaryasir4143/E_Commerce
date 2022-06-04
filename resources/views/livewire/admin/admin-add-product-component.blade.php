@@ -43,14 +43,14 @@
                             <div class="form-group">
                                 <label class="col-md-4 control control-labe">Short Description</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control" placeholder="Short Description"></textarea>
+                                    <textarea class="form-control" placeholder="short_description" wire:model="short_description"></textarea>
                                 </div>
                             </div>                            
 
                             <div class="form-group">
                                 <label class="col-md-4 control control-labe">Description</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control" placeholder="Description"></textarea>
+                                    <textarea class="form-control" placeholder="description" wire:model="description"></textarea>
                                 </div>
                             </div>
 
@@ -77,8 +77,8 @@
                             
                             <div class="form-group">
                                 <label class="col-md-4 control">Stock</label>
-                                <div class="col-md-4" wire:model="stock_status" >
-                                    <select name="" id="" class="form-control">
+                                <div class="col-md-4">
+                                    <select name="" id="" class="form-control" wire:model="stock_status">
                                         <option value="instock">InStock</option>
                                         <option value="outstock">Out of Stock</option>
                                     </select>
@@ -87,8 +87,8 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control">Featured</label>
-                                <div class="col-md-4"  wire:model="featured" >
-                                    <select name="" id="" class="form-control">
+                                <div class="col-md-4">
+                                    <select name="" id="" class="form-control" wire:model="featured">
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
                                     </select>
@@ -114,8 +114,8 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control">Category</label>
-                                <div class="col-md-4" wire:model="category_id" >
-                                    <select name="" id="" class="form-control">
+                                <div class="col-md-4">
+                                    <select name="" id="" class="form-control" wire:model="category_id">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
