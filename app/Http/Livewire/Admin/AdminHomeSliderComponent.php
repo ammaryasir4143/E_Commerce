@@ -7,11 +7,11 @@ use Livewire\Component;
 
 class AdminHomeSliderComponent extends Component
 {
-    public function deleteslide($slide-id)
+    public function deleteslide($slide_id)
     {
         $slider = HomeSlider::find($slide_id);
         $slider->delete();
-        session()->flash('message','Slider has been delete successfully!')
+        session()->flash('message','Slider has been deleted successfully!');
 
     }
 
@@ -19,6 +19,6 @@ class AdminHomeSliderComponent extends Component
     {   
         $sliders = HomeSlider::all();
 
-        return view('livewire.admin.admin-home-slider-component',['slider'=>$sliders])->layout('layouts.base');
+        return view('livewire.admin.admin-home-slider-component',['sliders'=>$sliders])->layout('layouts.base');
     }
 }

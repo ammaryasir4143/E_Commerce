@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Admin;
 
-use app\Models\HomeSlider;
+use App\Models\HomeSlider;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AdminAddHomeSliderComponent extends Component
 {
+    use WithFileUploads;
     public $title;
     public $subtitle;
     public $price;
@@ -29,18 +31,14 @@ class AdminAddHomeSliderComponent extends Component
         $slider->subtitle = $this->subtitle;
         $slider->price = $this->price;
         $slider->link = $this->link;
-        $imagename = Carbon
-
-        
-        $slider->image = $this->image;
+        $imagename = Carbon::now()->timestamp. '.' . $this->image->extension();
+        $this->image->storeAs('sliders', $imagename);        
+        $slider->image = $imagename;
         $slider->status = $this->status;
-        $slider->
+        $slider->save();
 
-
-
+        session()->flash('message','Slide has been created successfully!');
     }
-
-
 
     public function render()
     {

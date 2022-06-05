@@ -14,9 +14,12 @@
                         </div>
                     </div>
                     <div class="pannel-body">
-                        <form class="form-horizontal">
+                        @if (Session::has('message'))
+                            <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+                        @endif
+                        <form class="form-horizontal" wire:submit.prevent="addSlide">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Tittle</label>
+                                <label class="col-md-4 control-label">Title</label>
                                 <div class="col-md-4">
                                     <input type="text" placeholder="Tittle" class="form-control input-md" wire:model="title"/> 
                                 </div>
@@ -48,7 +51,7 @@
                                 <div class="col-md-4">
                                     <input type="file" class="input-file"  wire:model="image"/>       
                                     @if($image)
-                                    <img src="{{ $image->temporaryUrl() }}" width="120" /> 
+                                        <img src="{{ $image->temporaryUrl() }}" width="120" /> 
                                     @endif                     
                                 </div>  
                             </div>
@@ -67,11 +70,9 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                   <button type="submit" class="btn btn-primary">Submit<button>
+                                   <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>  
                             </div>
-
-
                         </form>
                     </div>
                 </div>

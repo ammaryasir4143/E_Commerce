@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\HomeSlider;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Carbon\Carbon
+use Carbon\Carbon;
 
 class AdminEditHomeSliderComponent extends Component
 {
@@ -33,19 +33,17 @@ class AdminEditHomeSliderComponent extends Component
 
     public function updateSlide()
     {
-        $slider = HomeSlider::find($this->slider-id);
+        $slider = HomeSlider::find($this->slider_id);
         $slider->title = $this->title;
         $slider->subtitle = $this->subtitle;
         $slider->price = $this->price;
-        $slider->image = $this->image;
-        $slider->link = $this->link;
+        $slider->link = $this->link;        
         if($this->newimage)
         {
             $imagename = Carbon::now()->timestamp. '.' . $this->image->extension();
             $this->image->storeAs('sliders',$imagename);
             $slider->image = $imagename; 
         }
-
         $slider->status = $this->status;
         $slider->save();
         session()->flash('message', 'Slide has been update Successfully!');

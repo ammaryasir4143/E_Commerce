@@ -18,7 +18,7 @@
                         <div class="alert alert-success" role="alert">{{ Session::get('message') }}
                         </div>
                         @endif
-                        <form class="form-horizontal" wire:submit.prevent="UpdateSlide">
+                        <form class="form-horizontal" wire:submit.prevent="updateSlide">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Tittle</label>
                                 <div class="col-md-4">
@@ -52,9 +52,9 @@
                                 <div class="col-md-4">
                                     <input type="file" class="input-file"  wire:model="newimage"/>       
                                     @if($newimage)
-                                    <img src="{{ $newimage->temporaryUrl() }}" width="120" /> 
+                                        <img src="{{ $newimage->temporaryUrl() }}" width="120" /> 
                                     @else
-                                    <img src="{{asset('assets/images/sliders')}} /{{ $image }}" width="120" />
+                                        <img src="{{asset('assets/images/sliders')}} /{{ $image }}" width="120" />
                                     @endif                     
                                 </div>  
                             </div>
@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                   <button type="submit" class="btn btn-primary">Update<button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>  
                             </div>
                         </form>
