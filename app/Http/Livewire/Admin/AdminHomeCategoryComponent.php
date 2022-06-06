@@ -23,6 +23,7 @@ class AdminHomeCategoryComponent extends Component
         $category = HomeCategory::find(1);
         $category->sel_categories = implode(',',$this->selected_categories);
         $category->no_of_products = $this->numberofproducts;
+        $category->save();
         session()->flash('message','HomeCategory has been updated successfully!');
     }
 
