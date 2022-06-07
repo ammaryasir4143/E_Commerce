@@ -16,9 +16,9 @@ class CartComponent extends Component
     }
     public function decreaseQuantity($rowId)
     {
-        $product = Cart::instance('cart')->getget($rowId);
+        $product = Cart::instance('cart')->get($rowId);
         $qty = $product->qty - 1;
-        Cart::instance('cart')->getupdate($rowId,$qty);
+        Cart::instance('cart')->update($rowId,$qty);
         $this->emitTo('cart-count-component','refreshComponent');
     }
     public function destroy($rowId)
