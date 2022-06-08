@@ -66,13 +66,7 @@ class CartComponent extends Component
     {
         Cart::instance('saveForLater')->remove($rowId);
         session()->flash('s_success_message','Item has been removed from save for later');
-    }
-
-    public function render()
-    {
-        return view('livewire.cart-component')->layout('layouts.base');
-    }
-   
+    }   
     public function removeCoupon()
     {
         session()->forget('coupon');
