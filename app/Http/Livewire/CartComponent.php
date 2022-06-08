@@ -33,6 +33,7 @@ class CartComponent extends Component
         session()->flash('success_message','Item has been deleted');
         
     }
+
     public function destroyAll()
     {
         Cart::instance('cart')->getdestroy();
@@ -42,6 +43,35 @@ class CartComponent extends Component
     // {
     //     return view('livewire.cart-component')->layout('layouts.base');
     // }
+    
+    public function switchToSaveForLater($rowId)
+    {
+        $item = Cart::instance('cart')->get($rowId);
+        Cart::instance('cart')->remove($rowId);
+        Cart::instance('SaveForLater')->add($item->id,$item->name,1,$item->price)->associate('App\Models\Products');
+        $this->emitTo('cart-count-component','refreshComponent');
+        session()->flash('success_message','Item has been saved for later');
+    }
+
+    public function moveToCart($rowId)
+    {
+        $item = Cart::instance('saveForLater')->get($rowId);
+        Cart::instance('saveForLater')->remove($rowId);
+        Cart::instance('cart')->add($item->id,$item->name,1,$item->price)->associate('App\Models\Products');
+        $this->emitTo('cart-count-component','refreshComponent');
+        session()->flash('s_success_message','Item has been saved for later');
+    }
+
+    public function deleteFromSaveForLater($rowId)
+    {
+        Cart::instance('saveForLater')->remove($rowId);
+        session()->flash('s_success_message','Item has been removed from save for later');
+    }
+
+    public function render()
+    {
+        return view('livewire.cart-component')->layout('layouts.base');
+    }
    
     public function removeCoupon()
     {
