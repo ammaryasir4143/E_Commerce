@@ -67,7 +67,7 @@
                     
                     <ul class="product-list grid-products equal-container">
                         @php
-                            $witems = Cart::instance('wishlist')->content()->pluck('id') ;
+                            $witems = Cart::instance('wishlist')->content()->pluck('id');
                         @endphp
                         @foreach ($products as $product)    
                         <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
