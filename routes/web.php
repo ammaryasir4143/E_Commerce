@@ -88,16 +88,10 @@ Route::middleware(['auth:sanctum', 'verified', 'authadmin'])->group(function(){
   Route::get('/admin/slider/edit/{slide_id}',AdminEditHomeSliderComponent::class)->name('admin.edithomeslider');
 
   Route::get('/admin/home-categories',AdminHomeCategoryComponent::class)->name('admin.homecategories');
+  Route::get('/admin/sale',AdminSaleComponent::class)->name('admin.sale');
 
   Route::get('/admin/coupons',AdminCouponsComponent::class)->name('admin.coupons');
   Route::get('/admin/coupon/add',AdminAddCouponComponent::class)->name('admin.addcoupon');
   Route::get('/admin/coupon/edit/{coupon_id}',AdminEditCouponComponent::class)->name('admin.editcoupon');
-  Route::get('/admin/sale',AdminSaleComponent::class)->name('admin.sale');
-
-  Route::get('/admin/coupons',AdminCouponsComponent::class)->name('admin.coupons');
-  Route::get('/admin/coupon/add',AdminAddCouponComponent::class)->name('admin.addcoupons');
-  Route::get('/admin/coupon/edit/{coupon_id}',AdminEditCouponComponent::class)->name('admin.editcoupon');
   
-  
-
 });
