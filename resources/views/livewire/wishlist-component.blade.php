@@ -11,7 +11,7 @@
             .product-wish{
                 position: absolute;
                 top:10%;
-                left:0%
+                left:0;
                 z-index:99;
                 right:30px;
                 text-align:right;
@@ -31,9 +31,8 @@
         </style>
 
         <div class="row">
-               @if (Cart::instance('wishlist')->content()->count() > 0)    
+            @if (Cart::instance('wishlist')->content()->count() > 0)                            
             <ul class="product-list grid-products equal-container">
-               
                 @foreach (Cart::instance('wishlist')->content() as $item)    
                 <li class="col-lg-3 col-md-6 col-sm-6 col-xs-6 ">
                     <div class="product product-style-3 equal-elem ">
@@ -45,20 +44,17 @@
                         <div class="product-info">
                             <a href="{{ route('product.details', ['slug'=>$item->model->slug]) }}" class="product-name"><span>{{$item->model->name}}</span></a>
                             <div class="wrap-price"><span class="product-price">${{$item->model->regular_price}}</span></div>
-                            <a href="#" class="btn add-to-cart" wire:click.prevent="moveProductFromWishlistToCart('{{ $item->rowId }}')">Move To Cart</a>
-                            <div class="product-wish">
-                                <a href="#" wire:click.prevent="removeFromWishlist({{$item->model->id}})"><i class="fa fa-heart fill-heart"></a>
-                                
+                            <a href="#" class="btn add-to-cart" wire:click.prevent="moveProductFromWishlistToCart({{ $item->rowId }})">Move To Cart</a>
+                            <div class="product-wish">                                        
+                                <a href="#" wire:click.prevent="removeFromWishlist({{ $item->model->id }})"><i class="fa fa-heart fill-heart"></i></a>                                
                             </div>
                         </div>
                     </div>
                 </li>
-                @endforeach
-                 
-
+                @endforeach                 
             </ul>
             @else
-            <h4>No Item in wishlist</h4>
+                <h4>No item in wishlist</h4>
             @endif
         </div>
     </div>

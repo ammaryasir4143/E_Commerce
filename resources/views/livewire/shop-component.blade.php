@@ -45,7 +45,7 @@
                     .product-wish{
                         position: absolute;
                         top:10%;
-                        left:0%
+                        left:0;
                         z-index:99;
                         right:30px;
                         text-align:right;
@@ -68,7 +68,7 @@
                     <ul class="product-list grid-products equal-container">
                         @php
                             $witems = Cart::instance('wishlist')->content()->pluck('id');
-                        @endphp
+                        @endphp                        
                         @foreach ($products as $product)    
                         <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
                             <div class="product product-style-3 equal-elem ">
@@ -81,11 +81,11 @@
                                     <a href="{{ route('product.details', ['slug'=>$product->slug]) }}" class="product-name"><span>{{$product->name}}</span></a>
                                     <div class="wrap-price"><span class="product-price">${{$product->regular_price}}</span></div>
                                     <a href="#" class="btn add-to-cart" wire:click.prevent="store({{ $product->id }}, '{{ $product->name }}', {{ $product->regular_price }})">Add To Cart</a>
-                                    <div class="product-wish">
-                                        @if($witems->contains($product->id))
-                                            <a href="#" wire:click.prevent="removeFromWishlist({{$product->id}})"><i class="fa fa-heart fill-heart"></a>
+                                    <div class="product-wish">                                        
+                                        @if ($witems->contains($product->id))
+                                            <a href="#" wire:click.prevent="removeFromWishlist({{ $product->id }})"><i class="fa fa-heart fill-heart"></i></a>
                                         @else
-                                            <a href="#" wire:click.prevent="addToWishlist({{ $product->id }}, '{{ $product->name }}', {{ $product->regular_price }})"><i class="fa fa-heart"></a>
+                                            <a href="#" wire:click.prevent="addToWishlist({{ $product->id }}, '{{ $product->name }}', {{ $product->regular_price }})"><i class="fa fa-heart"></i></a>                                            
                                         @endif
                                     </div>
                                 </div>

@@ -38,12 +38,7 @@
                                 <a class="link-to-product" href="{{ route('product.details',['slug'=>$item->model->slug]) }}">{{ $item->model->name }}</a>
                             </div>
                             <div class="price-field produtc-price"><p class="price">${{ $item->model->regular_price }}</p></div>
-                            <div class="quantity">
-                                <div class="quantity-input">
-                                    <input type="text" name="product-quatity" value="{{ $item->qty }}" data-max="120" pattern="[0-9]*" >									
-                                    <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->rowId}}')"></a>
-                                    <a class="btn btn-reduce" href="#" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')"></a>
-                                </div>
+                            <div class="quantity">                                
                                 <p class="text-center"><a href="#" wire:click.prevent="switchToSaveForLater('{{$item->rowId }}')">Save For Later</a></p>
                             </div>
                             <div class="price-field sub-total"><p class="price">${{ $item->subtotal }}</p></div>
@@ -81,6 +76,7 @@
                     <a class="btn btn-update" href="#">Update Shopping Cart</a>
                 </div>
             </div>
+
             <div class="wrap-iten-in-cart">
                 <h3 class="title-box" style="border-bottom: 1px solid; padding-bottom:15px;">{{Cart::instance('saveForLater')->count()}} item(s) Saved For Later</h3>  
                 @if (Session::has('s_success_message'))
@@ -101,7 +97,7 @@
                         </div>
                         <div class="price-field produtc-price"><p class="price">${{ $item->model->regular_price }}</p></div>
                         <div class="quantity">
-                        <p class="text-center"><a href="#" wire:click.prevent="moveToCart('{{$item->rowId }}')">Move To Cart</a></p>
+                            <p class="text-center"><a href="#" wire:click.prevent="moveToCart('{{$item->rowId }}')">Move To Cart</a></p>
                         </div>
                         <div class="delete">
                             <a href="#" wire:click.prevent="deleteFromSaveForLater('{{$item->rowId}}')" class="btn btn-delete" title="">

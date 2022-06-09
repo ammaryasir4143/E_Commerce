@@ -94,6 +94,10 @@
 													</li>
 
 													<li class="menu-item">
+														<a href="{{ route('admin.coupons') }}" title="All Coupon">All Coupon</a>
+													</li>
+
+													<li class="menu-item">
 														<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 													</li>													
 													<form id="logout-form" method="POST" action="{{ route('logout') }}">
@@ -135,11 +139,13 @@
 							<a href="/" class="link-to-home"><img src="{{ asset ('assets/images/logo-top-1.png')}}"></a>
 						</div>
 
-						@livewire('header-search-component')
-						
-						@livewire('wishlist-count-component')
-						
-						@livewire('cart-count-component')
+						@livewire('header-search-component')												
+												
+						<div class="wrap-icon right-section">
+							@livewire('wishlist-count-component')
+
+							@livewire('cart-count-component')
+							
 							<div class="wrap-icon-section show-up-after-1024">
 								<a href="#" class="mobile-navigation">
 									<span></span>
