@@ -7,8 +7,7 @@ use App\Models\Coupon;
 use Carbon\Carbon;
 use Livewire\Component;
 use Cart;
-use Illuminate\Support\Facades\Auth; 
-
+use Illuminate\Support\Facades\Auth;
 
 class CartComponent extends Component
 {
@@ -45,11 +44,7 @@ class CartComponent extends Component
     {
         Cart::instance('cart')->getdestroy();
         $this->emitTo('cart-count-component','refreshComponent');
-    }
-    // public function render()
-    // {
-    //     return view('livewire.cart-component')->layout('layouts.base');
-    // }
+    }    
     
     public function switchToSaveForLater($rowId)
     {
@@ -92,6 +87,11 @@ class CartComponent extends Component
     }
     public function setAmountForCheckout()
     {
+        if(Cart::instance('cart')->count() > 0)
+        {
+            session->forget('checkout');
+            return;
+        }
         if(session()->has('coupon'))
         {
             session()->put('checkout',[
