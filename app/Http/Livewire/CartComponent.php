@@ -25,6 +25,7 @@ class CartComponent extends Component
         Cart::instance('cart')->update($rowId,$qty);
         $this->emitTo('cart-count-component','refreshComponent');
     }
+    
     public function decreaseQuantity($rowId)
     {
         $product = Cart::instance('cart')->get($rowId);
@@ -32,12 +33,13 @@ class CartComponent extends Component
         Cart::instance('cart')->update($rowId,$qty);
         $this->emitTo('cart-count-component','refreshComponent');
     }
+
     public function destroy($rowId)
     {
-        Cart::instance('cart')->getremove($rowId);
-        $this->emitTo('cart-count-component','refreshComponent');
-        session()->flash('success_message','Item has been deleted');
-        
+        Cart::remove($rowId);
+        // Cart::instance('cart')->getremove($rowId);
+        // $this->emitTo('cart-count-component','refreshComponent');
+        session()->flash('success_message','Item has been deleted');        
     }
 
     public function destroyAll()
@@ -59,7 +61,7 @@ class CartComponent extends Component
     {
         $item = Cart::instance('saveForLater')->get($rowId);
         Cart::instance('saveForLater')->remove($rowId);
-        Cart::instance('cart')->add($item->id,$item->name,1,$item->price)->associate('App\Models\Products');
+        Cart::instance('cart')->add($item->id,$item->name,1,$item->price)->associate('App\Models\Product');
         $this->emitTo('cart-count-component','refreshComponent');
         session()->flash('s_success_message','Item has been saved for later');
     }
@@ -69,6 +71,7 @@ class CartComponent extends Component
         Cart::instance('saveForLater')->remove($rowId);
         session()->flash('s_success_message','Item has been removed from save for later');
     }   
+    
     public function removeCoupon()
     {
         session()->forget('coupon');
@@ -76,7 +79,7 @@ class CartComponent extends Component
 
     public function checkout()
     {
-         if(Auth::check())
+        if(Auth::check())
         {
             return redirect()->route('checkout');
         }
@@ -85,11 +88,12 @@ class CartComponent extends Component
             return redirect()->route('login');
         }
     }
+
     public function setAmountForCheckout()
     {
-        if(Cart::instance('cart')->count() > 0)
+        if(!Cart::instance('cart')->count() > 0)
         {
-            session->forget('checkout');
+            session()->forget('checkout');
             return;
         }
         if(session()->has('coupon'))
@@ -112,7 +116,7 @@ class CartComponent extends Component
         }  
     }   
 
-    public function apllyCouponCode()
+    public function applyCouponCode()
     {
         $coupon = Coupon::where('code',$this->couponCode)->where('expiry_Date','>=',Carbon::today())->where('cart_value','<=',Cart::instance('cart')->subtotal())->first();
         if(!$coupon)
@@ -140,8 +144,8 @@ class CartComponent extends Component
                 $this->discount = (Cart::instance('cart')->subtotal() * session()->get('coupon')['value'])/100;
             }
             $this->subtotalAfterDiscount = Cart::instance('cart')->subtotal() - $this->discount;
-            $this->taxAfterDiscount = ($this->subtotalAfterDiscount * 21)/100;
-            $this->totalAfterDiscount = $this->subtotalAfterDiscount +$this->taxAfterDiscount;
+            $this->taxAfterDiscount = ($this->subtotalAfterDiscount * config('cart.tax'))/100;
+            $this->totalAfterDiscount = $this->subtotalAfterDiscount + $this->taxAfterDiscount;
         }
     }
 

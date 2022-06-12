@@ -96,7 +96,15 @@
 													</li>
 
 													<li class="menu-item">
+														<a title="Sale Setting" href="{{ route('admin.sale') }}">Sale Setting</a>
+													</li>
+
+													<li class="menu-item">
 														<a href="{{ route('admin.coupons') }}" title="All Coupon">All Coupon</a>
+													</li>
+
+													<li class="menu-item">
+														<a href="{{ route('admin.orders') }}" title="All Orders">All Orders</a>
 													</li>
 
 													<li class="menu-item">
@@ -113,6 +121,9 @@
 												<ul class="submenu curency" >
 													<li class="menu-item" >
 														<a title="Dasboard" href="{{ route('user.dashboard') }}">Dashboard</a>
+													</li>
+													<li class="menu-item" >
+														<a title="My Orders" href="{{ route('user.orders') }}">My Orders</a>
 													</li>
 													<li class="menu-item">
 														<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
