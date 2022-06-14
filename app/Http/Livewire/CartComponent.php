@@ -37,14 +37,14 @@ class CartComponent extends Component
     public function destroy($rowId)
     {
         Cart::remove($rowId);
-        // Cart::instance('cart')->getremove($rowId);
-        // $this->emitTo('cart-count-component','refreshComponent');
+        Cart::instance('cart')->getremove($rowId);
+        $this->emitTo('cart-count-component','refreshComponent');
         session()->flash('success_message','Item has been deleted');        
     }
 
     public function destroyAll()
     {
-        Cart::instance('cart')->getdestroy();
+        Cart::instance('cart')->destroy();
         $this->emitTo('cart-count-component','refreshComponent');
     }    
     

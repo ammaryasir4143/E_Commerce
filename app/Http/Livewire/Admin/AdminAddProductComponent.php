@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\Subcategory;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -29,11 +31,30 @@ class AdminAddProductComponent extends Component
     public $images;   
     public $scategory_id; 
 
+    public $attr;
+    public $inputs = [];
+    public $attribute_arr = [];
+    public $attribute_values;
+
 
     public function mount()
     {
         $this->stock_status = 'instock';
         $this->featured = 0;
+    }
+
+    public function add()
+    {
+        if(!in_array($this->attr,$this->attribute_arr))
+        {
+            array_push($this->inputs,$this->attr);
+            array_push($this->attribute_arr,$this->attr);
+        }
+    }
+
+    public function remove($attr)
+    {
+        unset($this->inputs[$attr]);
     }
 
     public function generateSlug()
@@ -108,6 +129,18 @@ class AdminAddProductComponent extends Component
         }
         $product->save();
 
+        foreach($this->attribute_values as $key=>$attribute_value)
+        {
+            $avalues = explode(",",$attribute_value);
+            foreach($avalues as $avalue)
+            {
+                $attr_value = new AttributeValue();
+                $attr_value->product_attribute_id = $key;
+                $attr_value->product_id = $product->id;
+                $attr_value->save();
+            }
+        }
+
         session()->flash('message','Product has been created successfully!');
     }  
     
@@ -120,6 +153,8 @@ class AdminAddProductComponent extends Component
     {
         $categories = Category::all();
         $scategories = Subcategory::where('category_id',$this->category_id)->get();
-        return view('livewire.admin.admin-add-product-component',['categories'=>$categories])->layout('layouts.base');
+
+        $pattributes = ProductAttribute::all();
+        return view('livewire.admin.admin-add-product-component',['categories'=>$categories,'pattributes'=>$pattributes])->layout('layouts.base');
     }
 }
