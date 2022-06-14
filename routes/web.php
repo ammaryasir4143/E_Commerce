@@ -34,8 +34,6 @@ use App\Http\Livewire\User\UserOrderDetailsComponent;
 use App\Http\Livewire\User\UserOrdersComponent;
 use App\Http\Livewire\User\UserReviewComponent;
 use App\Http\Livewire\User\UserEditProfileComponent;
-use App\Http\Livewire\User\UserOrderDetailsComponent;
-use App\Http\Livewire\User\UserOrdersComponent;
 use App\Http\Livewire\User\UserProfileComponent;
 use App\Http\Livewire\WishlistComponent;
 use Illuminate\Support\Facades\Route;
