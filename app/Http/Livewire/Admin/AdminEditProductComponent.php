@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Livewire\Component;
 use illuminate\Support\Str;
 use Carbon\Carbon;
@@ -27,6 +28,11 @@ class AdminEditProductComponent extends Component
     public $newimage;
     public $product_id;
 
+
+    public $images;
+    public $newimages;
+    public $scategory_id;
+
     
     public function mount($product_slug)
     { 
@@ -42,7 +48,9 @@ class AdminEditProductComponent extends Component
         $this->featured = $product->featured;
         $this->quantity = $product->quantity;
         $this->image = $product->image;
-        $this->category_id = $product->category_id;    
+        $this->images = explode(",",$product->images);
+        $this->category_id = $product->category_id;   
+        $this->scategory_id = $product->subcategory_id; 
         $this->product_id = $product->id;
 
     }
@@ -55,6 +63,28 @@ class AdminEditProductComponent extends Component
     {
         $this->validateOnly($fields,[
             'name' => 'required',
+            'slug' => 'required',
+            'short_description' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'sale_price' => 'numeric',
+            'SKU' => 'required',
+            'stock_status' => 'required',            
+            'quantity' => 'required|numeric',            
+            'category_id' => 'required'
+        ]);
+        if($this->newimage)
+        {
+            $this->validateOnly($fields,[
+                'newimage' => 'required|mimes:jpeg,png,jpg'
+            ]);
+        }
+    }
+
+    public function updateProduct()
+    {
+        $this->validate([
+            'name' => 'required',
             'slug' => 'required|unique:products',
             'short_description' => 'required',
             'description' => 'required',
@@ -62,53 +92,77 @@ class AdminEditProductComponent extends Component
             'sale_price' => 'numeric',
             'SKU' => 'required',
             'stock_status' => 'required',            
-            'quantity' => 'required|numeric',
-            'newimage' => 'required|mimes:jpeg,png,jpg',
+            'quantity' => 'required|numeric',                
             'category_id' => 'required'
         ]);
-    }
 
-    public function updateProduct()
+        if($this->newimage)
         {
             $this->validate([
-                'name' => 'required',
-                'slug' => 'required|unique:products',
-                'short_description' => 'required',
-                'description' => 'required',
-                'regular_price' => 'required|numeric',
-                'sale_price' => 'numeric',
-                'SKU' => 'required',
-                'stock_status' => 'required',            
-                'quantity' => 'required|numeric',
-                'newimage' => 'required|mimes:jpeg,png,jpg',
-                'category_id' => 'required'
+                'newimage' => 'required|mimes:jpeg,png,jpg'
             ]);
-            $product = Product::find($this->product_id);
-            $product->name = $this->name;
-            $product->slug = $this->slug;
-            $product->short_description = $this->short_description;
-            $product->description = $this->description;
-            $product->regular_price = $this->regular_price;
-            $product->sale_price = $this->sale_price;
-            $product->SKU = $this->SKU;
-            $product->stock_status = $this->stock_status;
-            $product->featured = $this->featured;        
-            $product->quantity = $this->quantity;
-            if($this->newimage)
+        }
+        $product = Product::find($this->product_id);
+        $product->name = $this->name;
+        $product->slug = $this->slug;
+        $product->short_description = $this->short_description;
+        $product->description = $this->description;
+        $product->regular_price = $this->regular_price;
+        $product->sale_price = $this->sale_price;
+        $product->SKU = $this->SKU;
+        $product->stock_status = $this->stock_status;
+        $product->featured = $this->featured;        
+        $product->quantity = $this->quantity;
+        if($this->newimage)
+        {
+            unlink('assets/images/products'.'/'.$product->image);
+            $imageName = Carbon::now()->timestamp. '.' . $this->newimage->extension();
+            $this->newimage->storeAs('products', $imageName);
+            $product->image = $imageName;
+        }
+
+        if($this->newimages)
+        {
+            if($product->images)
             {
-                $imageName = Carbon::now()->timestamp. '.' . $this->newimage->extension();
-                $this->newimage->storeAs('products', $imageName);
-                $product->image = $imageName;
+                $images = explode(",",$product->images);
+                foreach($images as $image)
+                {
+                    if($image)
+                    {
+                        unlink('assets/images/products'.'/'.$image);
+                    }
+                }
             }
             
-            $product->category_id = $this->category_id;
-            $product->save();
-            session()->flash('message','Product has been updated successfully!');
+            $imagesname ='';
+            foreach($this->newimages as $key=>$image)
+            {
+                $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
+                $image->storeAs('products',$imgName);
+                $imagesname = $imagesname . ',' . $imgName;                    
+            }
+            $product->images = $imagesname;
         }
+        
+        $product->category_id = $this->category_id;
+        if($this->category_id)
+        {
+            $product->subcategory_id = $this->scategory_id;
+        }
+        $product->save();
+        session()->flash('message','Product has been updated successfully!');
+    }
+
+    public function changeSubcategory()
+    {
+        $this->scategory_id = 0;
+    }
     
     public function render()
     {
         $categories = Category::all();
-        return view('livewire.admin.admin-edit-product-component',['categories'=>$categories])->layout('layouts.base');
+        $scategories = Subcategory::where('category_id',$this->category_id)->get();
+        return view('livewire.admin.admin-edit-product-component',['categories'=>$categories,'scategories'=>$scategories])->layout('layouts.base');
     }
 }

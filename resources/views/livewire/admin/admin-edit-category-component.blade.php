@@ -37,6 +37,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Parent Category</label>
+                                <div class="col-md-4">
+                                    <select name="" id="" class="form-control" wire:model="category_id">
+                                        <option value="">None</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('slug')
+                                        <p class="text-danger">{{ $message }}</p>                                
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
                                     <button type="update" class="btn btn-primary">Update</button>

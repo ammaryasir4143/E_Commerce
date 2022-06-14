@@ -145,15 +145,50 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-4 control">Product Gallery</label>
+                                <div class="col-md-4">
+                                    <input type="file" class="input-file" wire:model="newimages" multiple />
+                                    @if ($newimages)
+                                        @foreach ($newimages as $newimage)
+                                            @if ($newimage)
+                                                <img src="{{ $newimage->temporaryUrl() }}" width="120">
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach ($images as $image)
+                                            @if ($image)
+                                                <img src="{{ asset('assets/images/products') }}/{{$image}}"width="120" />
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-4 control">Category</label>
                                 <div class="col-md-4" wire:model="category_id" >
-                                    <select name="" id="" class="form-control">
+                                    <select name="" id="" class="form-control" wire:model="category_id" wire:change="changeSubcategory">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category_id }}">{{ $category->name }}</option>
                                         @endforeach                                        
                                     </select>
                                     @error('category_id')
+                                        <p class="text-danger">{{ $message }}</p>                                
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control">Sub Category</label>
+                                <div class="col-md-4">
+                                    <select name="" id="" class="form-control" wire:model="scategory_id">
+                                        <option value="0">Select Category</option>
+                                        @foreach ($scategories as $scategory)
+                                            <option value="{{ $scategory->id }}">{{ $scategory->name }}</option>
+                                        @endforeach                                        
+                                    </select>
+                                    @error('scategory_id')
                                         <p class="text-danger">{{ $message }}</p>                                
                                     @enderror
                                 </div>
